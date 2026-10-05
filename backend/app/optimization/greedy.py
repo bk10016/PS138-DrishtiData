@@ -11,7 +11,7 @@ def greedy_solve(
     doc: FleetScenarioDocument, knobs: ScenarioKnobs | None = None, evaluator: PlanEvaluator | None = None
 ) -> tuple[DecisionChromosome, float]:
     knobs = knobs or ScenarioKnobs()
-    w = weights_for_profile(doc.objective)
+    w, _ = weights_for_profile(doc.objective)
     ev = evaluator or PlanEvaluator()
     load = {v.id: 0.0 for v in doc.vessels}
     ch = DecisionChromosome({}, {}, {}, {p.port_id: False for p in doc.ports})
