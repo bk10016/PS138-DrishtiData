@@ -33,12 +33,13 @@ def evaluate_robust(
     evaluator: RobustPlanEvaluator | None = None,
 ) -> RobustnessSummary:
     ev = evaluator or RobustPlanEvaluator(doc, scenario_count)
-    pairs = ev.per_scenario(doc, ch, weights_for_profile(doc.objective))
+    weights, _ = weights_for_profile(doc.objective)
+    pairs = ev.per_scenario(doc, ch, weights)
     max_late = doc.constraints.max_late_hours
     outcomes = [
         ScenarioOutcome(
             index=gs.scenario_index, label=gs.label,
-            feasible=r.feasible and all(p["late_hours"] <= max_late for p in r.per_demand.values()),
+            feasible=r.feasible and all(p.get("delay_hours", 0.0) <= max_late for p in r.per_demand.values()),
             cost=r.fuel_cost, co2e_kg=r.co2e_kg, delay_hours=r.delay_hours, risk=r.risk, scalar=r.scalar_objective,
         )
         for gs, r in pairs

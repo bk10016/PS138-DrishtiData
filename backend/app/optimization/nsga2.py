@@ -31,7 +31,7 @@ class NSGA2Result:
 class FleetProblem(Problem):
     def __init__(self, doc: FleetScenarioDocument, knobs: ScenarioKnobs, evaluator: PlanEvaluator):
         self.doc, self.knobs, self.ev = doc, knobs, evaluator
-        self.w = weights_for_profile(doc.objective)
+        self.w, _ = weights_for_profile(doc.objective)
         nv, nf = len(doc.vessels), len(doc.fuels)
         # Per-gene bounds: the old xu=1 for every gene collapsed vessel/fuel indices to {0, 1}.
         xu = np.tile([nv - 1 + 0.499, 1.0, nf - 1 + 0.499], len(doc.demands))
@@ -58,3 +58,4 @@ def run_nsga2(
     X, F = np.atleast_2d(res.X), np.atleast_2d(res.F)  # res.X is 1-D when the front has one point
     pareto = [repair_chromosome(doc, vector_to_chromosome(np.array(r), doc))[0] for r in X]
     return NSGA2Result(pareto=pareto, objectives=F)
+

@@ -45,6 +45,8 @@ class RobustPlanEvaluator(PlanEvaluator):
 
     @staticmethod
     def _weights(w: ObjectiveWeights, gs: GeneratedScenario) -> ObjectiveWeights:
+        if isinstance(w, tuple):
+            w = w[0]
         if w.lifecycle_ghg > 0:  # carbon price only matters for profiles that value GHG
             return w.model_copy(update={"carbon_price_per_tco2e": gs.knobs.carbon_price_per_tco2e})
         return w

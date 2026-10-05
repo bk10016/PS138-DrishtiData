@@ -66,7 +66,7 @@ def solve(
         ch, history = r.best, r.history
     elif solver == "nsga2":
         r = run_nsga2(doc, knobs, NSGA2Config(population_size, generations, seed), ev)
-        w = weights_for_profile(doc.objective)
+        w, _ = weights_for_profile(doc.objective)
         scored = [(ev.evaluate(doc, c, w, knobs).scalar_objective, c) for c in r.pareto]
         ch = min(scored, key=lambda t: t[0])[1]  # knee proxy: best scalarised member of the Pareto set
         pareto, history = r.pareto, [min(s for s, _ in scored)]
@@ -79,3 +79,4 @@ def solve(
 
     ch, repair_log = repair_chromosome(doc, ch)  # final pass; idempotent for already-repaired plans
     return SolveOutcome(solver, ch, [float(h) for h in history], time.perf_counter() - t0, repair_log, {**cfg, "seed": seed}, pareto, note)
+

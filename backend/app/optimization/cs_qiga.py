@@ -129,7 +129,7 @@ def run_cs_qiga(
 ) -> QIGAResult:
     cfg = cfg or QIGAConfig(seed=doc.seed)
     rng = np.random.default_rng(cfg.seed)
-    w = weights_for_profile(doc.objective)
+    w, _ = weights_for_profile(doc.objective)
     ev = scenario_evaluator or PlanEvaluator()
     knobs = knobs or ScenarioKnobs()
     P, lay = cfg.population_size, make_layout(doc, cfg.speed_bits)
@@ -161,3 +161,4 @@ def run_cs_qiga(
 
     assert best is not None
     return QIGAResult(best=best, best_objective=best_obj, history=history, final_betas=qreg.beta.mean(axis=0))
+

@@ -35,6 +35,8 @@ class PlanEvaluator:
 
     def evaluate(self, doc: FleetScenarioDocument, ch: DecisionChromosome, weights: ObjectiveWeights,
                  knobs: ScenarioKnobs | None = None, plan_id: str = "candidate") -> EvaluationResult:
+        if isinstance(weights, tuple):
+            weights = weights[0]
         knobs = knobs or ScenarioKnobs()
         route_map={r.id:r for r in doc.routes}; vessel_map={v.id:v for v in doc.vessels}; fuel_map={f.fuel_id:f for f in doc.fuels}
         per={}; total_fuel=total_cost=co2=delay=shore_cost=risk=0.0

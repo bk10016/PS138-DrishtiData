@@ -37,7 +37,7 @@ def run_classical_ga(
 ) -> GAResult:
     cfg = cfg or GAConfig(seed=doc.seed)
     rng = np.random.default_rng(cfg.seed)
-    w = weights_for_profile(doc.objective)
+    w, _ = weights_for_profile(doc.objective)
     ev = evaluator or PlanEvaluator()
     knobs = knobs or ScenarioKnobs()
     nv, nf, P = len(doc.vessels), len(doc.fuels), cfg.population_size
@@ -73,3 +73,4 @@ def run_classical_ga(
         pop = new_pop
 
     return GAResult(best=best, best_objective=best_obj, history=history)
+
