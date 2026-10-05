@@ -1,11 +1,9 @@
-# Runtime dependencies for the Vercel FastAPI service.
-# Keep this file limited to packages imported by the deployed application.
 fastapi>=0.115.0
 uvicorn>=0.32.0
 pydantic>=2.9.0
 pydantic-settings>=2.6.0
 sqlalchemy>=2.0.36
-python-multipart>=0.0.12
 numpy>=2.0.0
 pymoo>=0.6.1
 ortools>=9.10.0
+python-multipart>=0.0.12

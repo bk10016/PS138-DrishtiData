@@ -1,12 +1,8 @@
-# Files not required by the Vercel deployment bundles.
-.git/
-.github/
-**/__pycache__/
-**/*.pyc
-backend/tests/
-backend/pytest.ini
-backend/scripts/
-q-green-fleet-twin.zip
+**/tests/**
+**/__pycache__/**
+**/.pytest_cache/**
+frontend/node_modules
+frontend/dist
+backend/.venv
+backend/data/gold
 *.zip
-*.log
-.pytest_cache/
